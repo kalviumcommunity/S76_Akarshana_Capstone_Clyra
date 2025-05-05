@@ -86,33 +86,45 @@ exports.loginUser = async (req, res) => {
 };
 
 // Get all users (excluding passwords)
+
 exports.getAllUsers = async (req, res) => {
   try {
     const users = await User.find().select('-password'); 
-    res.status(200).json({ success: true, users }); 
+    res.status(200).json({ success: true, users });
   } catch (err) {
-    console.error(err); // Log the error
-    res.status(500).json({ message: 'Server error' }); 
+    console.error('Error fetching users:', err);
+    res.status(500).json({ message: 'Server error while fetching users' });
   }
 };
+
 
 // Get a specific user's profile
 exports.getUserProfile = async (req, res) => {
   try {
-    const userId = req.params.id; 
+    const userId = req.params.id;
 
-    const user = await User.findById(userId).select('-password'); 
+    const user = await User.findById(userId).select('-password');
 
     if (!user) {
-      return res.status(404).json({ message: 'User not found' }); 
+      return res.status(404).json({ message: 'User not found' });
     }
 
-    res.status(200).json({ success: true, user }); 
+    res.status(200).json({
+      success: true,
+      user: {
+        id: user._id,
+        username: user.username,
+        email: user.email,
+        profilePicture: user.profilePicture,
+        createdAt: user.createdAt,
+      },
+    });
   } catch (err) {
-    console.error(err); 
-    res.status(500).json({ message: 'Server error' }); 
+    console.error('Error fetching user profile:', err);
+    res.status(500).json({ message: 'Server error while fetching user profile' });
   }
 };
+
 
 // Update a user's profile
 exports.updateUserProfile = async (req, res) => {
