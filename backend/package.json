@@ -4,7 +4,7 @@
   "description": "**Clyra** is a mobile and web-based application designed to help users capture and preserve their memories, thoughts, media, and experiences in digital time capsules. These capsules can be opened in the future, creating a unique and emotional connection with the past. Users can store photos, videos, audio, and text-based reflections, setting specific dates for when they wish to revisit these moments.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npm test"
   },
   "keywords": [],
   "author": "",
@@ -16,6 +16,7 @@
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.14.1",
-    "nodemon": "^3.1.10"
+    "nodemon": "^3.1.10",
+    "test": "^3.3.0"
   }
 }
