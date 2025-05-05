@@ -18,7 +18,7 @@ app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 
 // Remove stray .map files if their .js counterparts don't exist
-const staticDir = path.join(__dirname, 'public'); 
+const staticDir = path.join(__dirname, 'public');
 if (fs.existsSync(staticDir)) {
   fs.readdirSync(staticDir).forEach(file => {
     if (file.endsWith('.map')) {
@@ -31,13 +31,10 @@ if (fs.existsSync(staticDir)) {
   });
 }
 
-// Database connection
-mongoose.connect(process.env.MONGODB_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
-.then(() => console.log('Connected to MongoDB'))
-.catch(err => console.error('MongoDB connection error:', err));
+// Database connection (updated to remove deprecated options)
+mongoose.connect(process.env.MONGODB_URI)
+  .then(() => console.log('Connected to MongoDB'))
+  .catch(err => console.error('MongoDB connection error:', err));
 
 // Routes
 app.use('/api/users', require('./routes/users.routes'));

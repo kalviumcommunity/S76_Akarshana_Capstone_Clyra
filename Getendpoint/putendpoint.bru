@@ -1,0 +1,22 @@
+meta {
+  name: putendpoint
+  type: http
+  seq: 5
+}
+
+put {
+  url: http://localhost:5000/api/users/68144f648924d10e3d4d1de9
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MTQ0ZjY0ODkyNGQxMGUzZDRkMWRlOSIsImlhdCI6MTc0NjM0Nzk3MSwiZXhwIjoxNzQ4OTM5OTcxfQ.0xDg79o1or1aOiWWGJGvwkjrmC3qCVMrQXqpaJO5OMo
+}
+
+body:json {
+  {
+    "username": "updatedUser123",
+    "profilePicture": "https://example.com/image.png"
+  }
+}
