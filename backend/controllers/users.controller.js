@@ -98,12 +98,18 @@ exports.getUserProfile = async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 };
+
 exports.updateUserProfile = async (req, res) => {
   try {
     const userId = req.params.id;
     const updates = req.body;
 
-    // Prevent email or password from being updated directly here
+    // Only allow the user themselves or an admin to update
+    if (req.user._id.toString() !== userId && !req.user.isAdmin) {
+      return res.status(403).json({ message: 'Not authorized to update this profile' });
+    }
+
+    // Prevent email or password updates from this endpoint
     if (updates.password || updates.email) {
       return res.status(400).json({ message: 'Email and password updates are not allowed from this endpoint.' });
     }
@@ -117,7 +123,7 @@ exports.updateUserProfile = async (req, res) => {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    // Generate a new JWT token after update
+    // Generate new JWT
     const token = jwt.sign({ id: updatedUser._id }, process.env.JWT_SECRET, {
       expiresIn: '30d',
     });
@@ -138,3 +144,4 @@ exports.updateUserProfile = async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 };
+
