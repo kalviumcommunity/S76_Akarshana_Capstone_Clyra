@@ -2,6 +2,7 @@
 const bcrypt = require('bcryptjs'); 
 const jwt = require('jsonwebtoken'); 
 const User = require('../models/User'); 
+const TimeCapsuleModel = require('../models/TimeCapsuleModel');
 
 // Register a new user
 exports.registerUser = async (req, res) => {

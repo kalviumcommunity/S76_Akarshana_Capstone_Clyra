@@ -1,35 +1,43 @@
+const mongoose = require('mongoose');
+const TimeCapsule = require('../models/TimeCapsuleModel');
 
-// @desc    Create a new time capsule
-// @route   POST /api/timecapsules
-// @access  Private
 exports.createTimeCapsule = async (req, res) => {
   try {
     const { 
       title, 
       description, 
-      unlockDate, 
+      unlockedDate, 
       isPrivate = false, 
       isLocked = true,
-      collaborators = [] 
+      collaborators = [],
+      creator // Allow creator to be passed in the request body
     } = req.body;
 
     // Basic validation
-    if (!title || !unlockDate) {
+    if (!title || !unlockedDate || !creator) {
       return res.status(400).json({
         success: false,
-        message: 'Please provide title and unlock date'
+        message: 'Please provide title, unlockedDate, and creator'
       });
     }
+
+    // Validate and cast collaborators to ObjectId
+    const validCollaborators = collaborators.map((id) => {
+      if (!mongoose.Types.ObjectId.isValid(id)) {
+        throw new Error(`Invalid collaborator ID: ${id}`);
+      }
+      return new mongoose.Types.ObjectId(id);
+    });
 
     // Create new time capsule
     const newTimeCapsule = await TimeCapsule.create({
       title,
       description,
-      creator: req.user.id,
-      unlockDate: new Date(unlockDate),
+      creator, // Use creator from the request body
+      unlockedDate: new Date(unlockedDate), // Ensure it's a valid date
       isPrivate,
       isLocked,
-      collaborators,
+      collaborators: validCollaborators,
       creationDate: Date.now()
     });
 
@@ -40,7 +48,7 @@ exports.createTimeCapsule = async (req, res) => {
     });
   } catch (error) {
     console.error(error);
-    
+
     // Handle duplicate key error
     if (error.code === 11000) {
       return res.status(400).json({
@@ -48,7 +56,15 @@ exports.createTimeCapsule = async (req, res) => {
         message: 'A time capsule with that title already exists'
       });
     }
-    
+
+    // Handle invalid collaborator ID error
+    if (error.message && error.message.startsWith('Invalid collaborator ID')) {
+      return res.status(400).json({
+        success: false,
+        message: error.message
+      });
+    }
+
     res.status(500).json({
       success: false,
       message: 'Server error'

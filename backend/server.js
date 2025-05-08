@@ -38,6 +38,7 @@ mongoose.connect(process.env.MONGODB_URI)
 
 // Routes
 app.use('/api/users', require('./routes/users.routes'));
+app.use('/api', require('./routes/timecapsule.routes'));
 
 // Optional: add public folder for static files (e.g., frontend or uploads)
 app.use(express.static(path.join(__dirname, 'public')));
