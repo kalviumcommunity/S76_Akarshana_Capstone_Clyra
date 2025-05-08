@@ -9,7 +9,8 @@ describe('Update User Profile', () => {
   let userId;
 
   beforeAll(async () => {
-    // Create a test user in DB
+    
+    
     const testUser = await User.create({
       username: 'testuser',
       email: 'testuser@example.com',
@@ -18,7 +19,8 @@ describe('Update User Profile', () => {
 
     userId = testUser._id;
 
-    // Generate JWT token
+   
+    
     token = jwt.sign({ id: testUser._id }, process.env.JWT_SECRET, {
       expiresIn: '1h',
     });
