@@ -1,0 +1,23 @@
+meta {
+  name: post
+  type: http
+  seq: 6
+}
+
+post {
+  url: http://localhost:5000/api/timecapsules
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "title": "Test Capsule Without Auth",
+    "description": "This is a test capsule without authentication.",
+    "unlockedDate": "2030-01-01T00:00:00Z",
+    "isPrivate": false,
+    "isLocked": true,
+    "creator": "645c1f2e5f1b2c001c8e4d9a", // Pass the creator's ID
+    "collaborators": ["645c1f2e5f1b2c001c8e4d9b"]
+  }
+}
