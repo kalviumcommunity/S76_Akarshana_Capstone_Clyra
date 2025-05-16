@@ -130,3 +130,4 @@ Whether you're preserving memories for yourself or creating meaningful legacies 
 
 ---
 ## Render link: https://s76-akarshana-capstone-clyra.onrender.com 
+## Netlify link: https://relaxed-daffodil-4ee7d9.netlify.app/
