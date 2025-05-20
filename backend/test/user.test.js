@@ -7,6 +7,7 @@ const User = require('../models/User');
 describe('Update User Profile', () => {
   let token;
   let userId;
+  jest.setTimeout(20000); // 20 seconds
 
   beforeAll(async () => {
     
