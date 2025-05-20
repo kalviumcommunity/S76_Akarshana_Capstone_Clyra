@@ -5,7 +5,14 @@ meta {
 }
 
 post {
-  url: http://localhost:5000/api
-  body: none
+  url: http://localhost:5000/api/timecapsules/68144f648924d10e3d4d1de9/media
+  body: json
   auth: inherit
+}
+
+body:json {
+  {
+    "type": "photo",
+    "url": "https://example.com/test-image.jpg"
+  }
 }
